@@ -31,3 +31,21 @@ CREATE TABLE Users (
     -- Write your check constraint to restrict 'role' to specific allowed strings
   check(role in ('Ticket Manager', 'Football Fan'))
 );
+
+-- =========================================================================
+-- 2. CREATE MATCHES TABLE
+-- =========================================================================
+CREATE TABLE Matches (
+    match_id serial,
+    fixture varchar(100) not null,
+    tournament_category varchar(100) not null,
+    base_ticket_price decimal(10,2) not null,
+    match_status varchar(20) not null,
+    
+    -- Write your constraint to make 'match_id' the Primary Key
+  primary key (match_id),
+    -- Write your check constraint to prevent negative ticket prices
+  check (base_ticket_price >= 0),
+    -- Write your check constraint to restrict 'match_status' values
+  check(match_status in ('Available', 'Selling Fast', 'Sold Out', 'Postponed'))
+);
