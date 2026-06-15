@@ -49,3 +49,26 @@ CREATE TABLE Matches (
     -- Write your check constraint to restrict 'match_status' values
   check(match_status in ('Available', 'Selling Fast', 'Sold Out', 'Postponed'))
 );
+
+-- =========================================================================
+-- 3. CREATE BOOKINGS TABLE
+-- =========================================================================
+CREATE TABLE Bookings (
+    booking_id serial,
+    user_id int not null,
+    match_id int not null,
+    seat_number varchar(10),
+    payment_status varchar(20),
+    total_cost decimal(10,2) not null,
+    
+    -- Write your constraint to make 'booking_id' the Primary Key
+  primary key (booking_id),
+    -- Write your Foreign Key constraint linking 'user_id' to the Users table
+  foreign key (user_id) references Users(user_id),
+    -- Write your Foreign Key constraint linking 'match_id' to the Matches table
+  foreign key (match_id) references Matches(match_id),
+    -- Write your check constraint to ensure 'total_cost' is non-negative
+  check (total_cost >= 0),
+    -- Write your check constraint to restrict 'payment_status' values
+  check (payment_status in ('Pending', 'Confirmed', 'Cancelled', 'Refunded'))
+);
